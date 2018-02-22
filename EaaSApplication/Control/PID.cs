@@ -19,14 +19,14 @@ namespace Control
     ///  - None: State is kept in memory only and not replicated.
     /// </remarks>
     [StatePersistence(StatePersistence.Persisted)]
-    internal class Control : Actor, IControl
+    internal class PID : Actor, IPID
     {
         /// <summary>
         /// Initializes a new instance of Control
         /// </summary>
         /// <param name="actorService">The Microsoft.ServiceFabric.Actors.Runtime.ActorService that will host this actor instance.</param>
         /// <param name="actorId">The Microsoft.ServiceFabric.Actors.ActorId for this actor instance.</param>
-        public Control(ActorService actorService, ActorId actorId)
+        public PID(ActorService actorService, ActorId actorId)
             : base(actorService, actorId)
         {
         }
@@ -43,29 +43,33 @@ namespace Control
             // Data stored in the StateManager will be replicated for high-availability for actors that use volatile or persisted state storage.
             // Any serializable object can be saved in the StateManager.
             // For more information, see https://aka.ms/servicefabricactorsstateserialization
+            this.StateManager.TryAddStateAsync<double>("oldError", 0);
+            this.StateManager.TryAddStateAsync<double>("sumError", 0);
 
             return this.StateManager.TryAddStateAsync("count", 0);
         }
 
-        /// <summary>
-        /// TODO: Replace with your own actor method.
-        /// </summary>
-        /// <returns></returns>
-        Task<int> IControl.GetCountAsync(CancellationToken cancellationToken)
+        Task<double> IPID.RunPIDAsync(double measuredValue, double setPoint, double Kp, double Ki, double Kd)
         {
-            return this.StateManager.GetStateAsync<int>("count", cancellationToken);
-        }
+            //Retrieve values stored in the previous call
+            var oldErrorTask = this.StateManager.GetStateAsync<double>("oldError");
+            var sumErrorTask = this.StateManager.GetStateAsync<double>("sumError");
+            var oldError = oldErrorTask.Result;
+            var sumError = sumErrorTask.Result;
 
-        /// <summary>
-        /// TODO: Replace with your own actor method.
-        /// </summary>
-        /// <param name="count"></param>
-        /// <returns></returns>
-        Task IControl.SetCountAsync(int count, CancellationToken cancellationToken)
-        {
-            // Requests are not guaranteed to be processed in order nor at most once.
-            // The update function here verifies that the incoming count is greater than the current count to preserve order.
-            return this.StateManager.AddOrUpdateStateAsync("count", count, (key, value) => count > value ? count : value, cancellationToken);
+            //PID control
+            var newError = setPoint - measuredValue;
+            var diffError = newError - oldError;
+            var control = Kp * newError + Ki * sumError + Kd * diffError;
+            sumError = sumError + newError;
+
+            //Store values for the next call
+            this.StateManager.SetStateAsync<double>("oldError", newError);
+            this.StateManager.SetStateAsync<double>("sumError", sumError);
+
+            //Return control value to the client
+            return Task.FromResult<double>(control);
+
         }
     }
 }

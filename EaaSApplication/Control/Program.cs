@@ -21,7 +21,7 @@ namespace Control
                 // are automatically populated when you build this project.
                 // For more information, see https://aka.ms/servicefabricactorsplatform
 
-                ActorRuntime.RegisterActorAsync<Control>(
+                ActorRuntime.RegisterActorAsync<PID>(
                    (context, actorType) => new ActorService(context, actorType)).GetAwaiter().GetResult();
 
                 Thread.Sleep(Timeout.Infinite);
