@@ -3,23 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.ServiceFabric.Actors;
-using Microsoft.ServiceFabric.Actors.Client;
-using Control.Interfaces;
 
-namespace API.Controllers
+namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
-    public class PIDController : Controller
+    public class ValuesController : Controller
     {
+        // GET api/values
         [HttpGet]
-        [Route("{id}/{measuredValue}/{setPoint}/{Kp}/{Ki}/{Kd}")]
-        public async Task<string> Get(int id, double measuredValue, double setPoint, double Kp, double Ki, double Kd)
+        public IEnumerable<string> Get()
         {
-            ActorId actorId = new ActorId(id);
-            var actor1 = ActorProxy.Create<IPID>(actorId, new Uri("fabric:/Application/PIDActorService"));
-            double response = await actor1.RunPIDAsync(measuredValue, setPoint, Kp, Ki,  Kd);
-            return response.ToString();
+            return new string[] { "value1", "value2" };
         }
 
         // GET api/values/5

@@ -11,14 +11,14 @@ using Microsoft.ServiceFabric.Services.Communication.AspNetCore;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
 
-namespace API
+namespace WebAPI
 {
     /// <summary>
     /// The FabricRuntime creates an instance of this class for each service type instance. 
     /// </summary>
-    internal sealed class API : StatelessService
+    internal sealed class WebAPI : StatelessService
     {
-        public API(StatelessServiceContext context)
+        public WebAPI(StatelessServiceContext context)
             : base(context)
         { }
 
