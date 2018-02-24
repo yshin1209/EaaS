@@ -29,10 +29,10 @@ namespace PID
 
         protected override Task OnActivateAsync()
         {
-            ActorEventSource.Current.ActorMessage(this, "Actor activated.");
+            ActorEventSource.Current.ActorMessage(this, "PID Actor activated.");
             this.StateManager.TryAddStateAsync<double>("oldError", 0);
             this.StateManager.TryAddStateAsync<double>("sumError", 0);
-            return this.StateManager.TryAddStateAsync("count", 0);
+            return base.OnActivateAsync();
         }
 
         Task<double> IPID.RunPIDAsync(double actualValue, double desiredValue, double Kp, double Ki, double Kd)
@@ -48,6 +48,7 @@ namespace PID
             var diffError = newError - oldError;
             var control = Kp * newError + Ki * sumError + Kd * diffError;
             sumError = sumError + newError;
+
 
             //Store values for the next call
             this.StateManager.SetStateAsync<double>("oldError", newError);
