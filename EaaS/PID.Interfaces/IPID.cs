@@ -8,24 +8,11 @@ using Microsoft.ServiceFabric.Actors;
 namespace PID.Interfaces
 {
     /// <summary>
-    /// This interface defines the methods exposed by an actor.
-    /// Clients use this interface to interact with the actor that implements it.
+    /// This interface defines the methods exposed by the PID actor.
+    /// Clients use this interface to interact with the PID actor that implements it.
     /// </summary>
     public interface IPID : IActor
     {
-        /// <summary>
-        /// TODO: Replace with your own actor method.
-        /// </summary>
-        /// <returns></returns>
-        Task<int> GetCountAsync(CancellationToken cancellationToken);
-
-        /// <summary>
-        /// TODO: Replace with your own actor method.
-        /// </summary>
-        /// <param name="count"></param>
-        /// <returns></returns>
-        Task SetCountAsync(int count, CancellationToken cancellationToken);
-
-        Task<double> RunPIDAsync(double measuredValue, double setPoint, double Kp, double Ki, double Kd);
+        Task<double> RunPIDAsync(double actualValue, double desiredValue, double Kp, double Ki, double Kd);
     }
 }

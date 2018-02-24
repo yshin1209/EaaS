@@ -21,45 +21,21 @@ namespace PID
     [StatePersistence(StatePersistence.Persisted)]
     internal class PID : Actor, IPID
     {
-        /// <summary>
-        /// Initializes a new instance of Control
-        /// </summary>
-        /// <param name="actorService">The Microsoft.ServiceFabric.Actors.Runtime.ActorService that will host this actor instance.</param>
-        /// <param name="actorId">The Microsoft.ServiceFabric.Actors.ActorId for this actor instance.</param>
+       
         public PID(ActorService actorService, ActorId actorId)
             : base(actorService, actorId)
         {
         }
 
-        public Task<int> GetCountAsync(CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SetCountAsync(int count, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// This method is called whenever an actor is activated.
-        /// An actor is activated the first time any of its methods are invoked.
-        /// </summary>
         protected override Task OnActivateAsync()
         {
             ActorEventSource.Current.ActorMessage(this, "Actor activated.");
-
-            // The StateManager is this actor's private state store.
-            // Data stored in the StateManager will be replicated for high-availability for actors that use volatile or persisted state storage.
-            // Any serializable object can be saved in the StateManager.
-            // For more information, see https://aka.ms/servicefabricactorsstateserialization
             this.StateManager.TryAddStateAsync<double>("oldError", 0);
             this.StateManager.TryAddStateAsync<double>("sumError", 0);
-
             return this.StateManager.TryAddStateAsync("count", 0);
         }
 
-        Task<double> IPID.RunPIDAsync(double measuredValue, double setPoint, double Kp, double Ki, double Kd)
+        Task<double> IPID.RunPIDAsync(double actualValue, double desiredValue, double Kp, double Ki, double Kd)
         {
             //Retrieve values stored in the previous call
             var oldErrorTask = this.StateManager.GetStateAsync<double>("oldError");
@@ -68,7 +44,7 @@ namespace PID
             var sumError = sumErrorTask.Result;
 
             //PID control
-            var newError = setPoint - measuredValue;
+            var newError = desiredValue - actualValue;
             var diffError = newError - oldError;
             var control = Kp * newError + Ki * sumError + Kd * diffError;
             sumError = sumError + newError;
@@ -79,7 +55,6 @@ namespace PID
 
             //Return control value to the client
             return Task.FromResult<double>(control);
-
         }
     }
 }

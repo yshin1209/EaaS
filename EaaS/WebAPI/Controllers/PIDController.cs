@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Client;
@@ -23,6 +20,5 @@ namespace WebAPI.Controllers
             double response = await actor1.RunPIDAsync(measuredValue, setPoint, Kp, Ki, Kd);
             return response.ToString();
         }
-
     }
 }
