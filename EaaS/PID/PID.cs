@@ -49,7 +49,6 @@ namespace PID
             var control = Kp * newError + Ki * sumError + Kd * diffError;
             sumError = sumError + newError;
 
-
             //Store values for the next call
             this.StateManager.SetStateAsync<double>("oldError", newError);
             this.StateManager.SetStateAsync<double>("sumError", sumError);
