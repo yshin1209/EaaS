@@ -8,24 +8,28 @@ Ki = num2str(2);            % integral parameter Ki
 Kd = num2str(0.8);          % derivative parameter Kd
 
 for n= 3:N
-
-    if n> 50 d=60; % add disturbance (d) to x at time > 50
+    % add disturbance (d) to x at time > 50
+    if n> 50 d=60; 
     else d=0;
     end
     
-    x(n) =0.4*u(n-1)+0.6*x(n-1) + d; % simulated x which takes control signal u as an input
+    % simulated x which takes control signal u as an input
+    x(n) =0.4*u(n-1)+0.6*x(n-1) + d; 
+    
+    % convert x and r into string
     x_value = num2str(x(n));
     r_value = num2str(r(n));
     
+    % reset the stored values (on the cloud) to zero in the beginning
     if n==3 
-        reset_value = 'true'; % reset the stored values (on the cloud) to zero in the beginning
+        reset_value = 'true'; 
     else
         reset_value = 'false';
     end
     
+    % consume the PID web service (REST APi)
     url =['http://csmlab8.uconn.edu/api/pid/' newServiceId '/' reset_value '/' x_value '/' r_value '/' Kp '/' Ki '/' Kd];
-    u(n) =webread(url); % call PID web service which returns control signal u(n)
-    
+    u(n) =webread(url); % call PID web service which returns control signal u(n)   
 end
 
 figure
