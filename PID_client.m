@@ -7,9 +7,11 @@ Kp =num2str(2);    % proportional parameter Kp
 Ki = num2str(2);   % integral parameter Ki
 Kd = num2str(0.8); % derivative parameter Kd
 for n= 3:N
+
     if n> 50 d=60; % add disturbance (d) to x at time > 50
     else d=0;
     end
+    
     x(n) =0.4*u(n-1)+0.6*x(n-1) + d; % simulated x which takes control signal c as an input
     x_value = num2str(x(n));
     r_value = num2str(r(n));
@@ -23,6 +25,7 @@ for n= 3:N
     url =['http://csmlab8.uconn.edu/api/pid/' newServiceId '/' reset_value '/' x_value '/' r_value '/' Kp '/' Ki '/' Kd];
     u(n) =webread(url); % call PID web service which returns control signal c(n)
 end
+
 figure
 plot(1:N, r, 'r', 1:N, x, 'b', 1:N, u, 'g');
 legend('r (reference)', 'x (output)', 'u (control)');
