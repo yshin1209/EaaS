@@ -13,6 +13,6 @@ namespace PID.Interfaces
     /// </summary>
     public interface IPID : IActor
     {
-        Task<double> RunPIDAsync(double actualValue, double desiredValue, double Kp, double Ki, double Kd);
+        Task<double> RunPIDAsync(bool reset, double actualValue, double desiredValue, double Kp, double Ki, double Kd);
     }
 }

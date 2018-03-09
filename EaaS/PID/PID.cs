@@ -35,13 +35,21 @@ namespace PID
             return base.OnActivateAsync();
         }
 
-        Task<double> IPID.RunPIDAsync(double actualValue, double desiredValue, double Kp, double Ki, double Kd)
+        Task<double> IPID.RunPIDAsync(bool reset, double actualValue, double desiredValue, double Kp, double Ki, double Kd)
         {
+            if (reset == true)
+            {
+                this.StateManager.SetStateAsync<double>("oldError", 0);
+                this.StateManager.SetStateAsync<double>("sumError", 0);
+            }
+
             //Retrieve values stored in the previous call
             var oldErrorTask = this.StateManager.GetStateAsync<double>("oldError");
             var sumErrorTask = this.StateManager.GetStateAsync<double>("sumError");
             var oldError = oldErrorTask.Result;
             var sumError = sumErrorTask.Result;
+
+
 
             //PID control
             var newError = desiredValue - actualValue;
