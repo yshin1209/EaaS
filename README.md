@@ -10,5 +10,5 @@ What is a REST API? https://www.mulesoft.com/resources/api/what-is-rest-api-desi
 
 UConn CSMLab (Computational and Systems Medicine Lab) http://csml.uconn.edu
 
-![alt text |512x397,20%](screenshots/pid_client.png)
+![alt text |100x100,20%](screenshots/pid_client.png)
 
