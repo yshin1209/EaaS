@@ -1,4 +1,4 @@
-# EaaS
+# EaaS (Engineering as a Service)
 
 PID Control as a Service
 
