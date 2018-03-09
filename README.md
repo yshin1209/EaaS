@@ -4,7 +4,7 @@
 University of Connecticut CSMLab (Computational and Systems Medicine Lab) http://csml.uconn.edu
 
 ## Instruction
-Download and run PID_client.m (MATLAB file) on your computer. This client will remotely consume the PID control web service (REST API) priovided by the Azure Service Fabric microservices application hosted at csmlab8.uconn.edu (the result is shown below):
+Download and run PID_client.m (MATLAB file) on your computer where MATLAB is installed (R2014b or higher). This client will remotely consume the PID control web service (REST API) priovided by the Azure Service Fabric microservices application hosted at csmlab8.uconn.edu (the result is shown below):
 
 <img align="left" width="500" height="500" src="screenshots/pid_client.png">
 
