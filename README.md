@@ -12,4 +12,4 @@ UConn CSMLab (Computational and Systems Medicine Lab) http://csml.uconn.edu
 
 ![alt text](screenshots/pid_client.png)
 
-![](screenshots/pid_client.png =400x600)
+![alt text](screenshots/pid_client.png = 400x600)
