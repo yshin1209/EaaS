@@ -28,8 +28,8 @@ for n= 3:N
     end
     
     % call the PID web service which returns control signal u(n)
-    url =['http://csmlab8.uconn.edu/api/pid/' newServiceId '/' reset_value '/' x_value '/' r_value '/' Kp '/' Ki '/' Kd];
-    u(n) =webread(url);   
+    url = ['http://csmlab8.uconn.edu/api/pid/' newServiceId '/' reset_value '/' x_value '/' r_value '/' Kp '/' Ki '/' Kd];
+    u(n) = webread(url);   
 end
 
 figure
