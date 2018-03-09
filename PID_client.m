@@ -12,7 +12,7 @@ for n= 3:N
     else d=0;
     end
     
-    x(n) =0.4*u(n-1)+0.6*x(n-1) + d; % simulated x which takes control signal c as an input
+    x(n) =0.4*u(n-1)+0.6*x(n-1) + d; % simulated x which takes control signal u as an input
     x_value = num2str(x(n));
     r_value = num2str(r(n));
     
@@ -23,7 +23,8 @@ for n= 3:N
     end
     
     url =['http://csmlab8.uconn.edu/api/pid/' newServiceId '/' reset_value '/' x_value '/' r_value '/' Kp '/' Ki '/' Kd];
-    u(n) =webread(url); % call PID web service which returns control signal c(n)
+    u(n) =webread(url); % call PID web service which returns control signal u(n)
+    
 end
 
 figure
