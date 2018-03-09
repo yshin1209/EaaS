@@ -1,11 +1,11 @@
 N = 63;                     % number of iteration
-x = zeros(N,1);             % measured data x
+x = zeros(N,1);             % output (measured) signal x
 u = zeros(N,1);             % control signal u
 r = 60*sin(-pi:0.1:pi)+200; % reference (target) values
 newServiceId = '1';         % new Actor service ID
-Kp = num2str(2);            % proportional parameter Kp
-Ki = num2str(2);            % integral parameter Ki
-Kd = num2str(0.8);          % derivative parameter Kd
+Kp = num2str(2);            % the proportional parameter Kp
+Ki = num2str(2);            % the integral parameter Ki
+Kd = num2str(0.8);          % the derivative parameter Kd
 
 for n= 3:N
     % add disturbance (d) to x at time > 50
