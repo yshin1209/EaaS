@@ -6,5 +6,7 @@ Download and run PID_client.m file (MATLAB file) on your computer. This client w
 
 Azure Service Fabric https://azure.microsoft.com/en-us/services/service-fabric/
 
+What is a REST API? https://www.mulesoft.com/resources/api/what-is-rest-api-design
+
 UConn CSMLab (Computational and Systems Medicine Lab) http://csml.uconn.edu
 
