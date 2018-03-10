@@ -7,21 +7,23 @@ Kp = num2str(2);            % the proportional parameter Kp
 Ki = num2str(2);            % the integral parameter Ki
 Kd = num2str(0.8);          % the derivative parameter Kd
 
-for n= 3:N
+for n = 2:N
     % add disturbance (d) to x at time > 50
-    if n> 50 d=60; 
-    else d=0;
+    if n > 50 
+        d = 60; 
+    else
+        d = 0;
     end
     
     % simulated x which takes control signal u as an input
-    x(n) =0.4*u(n-1)+0.6*x(n-1) + d; 
+    x(n) = 0.4*u(n-1)+0.6*x(n-1)+d; 
     
     % convert x and r into string
     x_value = num2str(x(n));
     r_value = num2str(r(n));
     
     % reset the stored values (on the cloud) to zero in the beginning
-    if n==3 
+    if n == 2 
         reset_value = 'true'; 
     else
         reset_value = 'false';
