@@ -1,5 +1,7 @@
 % PID (Proportional-Integral_Derivative) web service client
 % Yong-Jun Shin (2018)
+clear all;
+close all;
 N = 63;                     % number of iteration
 x = zeros(N,1);             % output (measured) signal x
 u = zeros(N,1);             % control signal u
