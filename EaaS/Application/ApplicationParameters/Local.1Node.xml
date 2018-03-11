@@ -5,5 +5,8 @@
     <Parameter Name="PIDActorService_PartitionCount" Value="1" />
     <Parameter Name="PIDActorService_TargetReplicaSetSize" Value="1" />
     <Parameter Name="PIDActorService_MinReplicaSetSize" Value="1" />
+    <Parameter Name="LMSActorService_PartitionCount" Value="1" />
+    <Parameter Name="LMSActorService_TargetReplicaSetSize" Value="1" />
+    <Parameter Name="LMSActorService_MinReplicaSetSize" Value="1" />
   </Parameters>
 </Application>

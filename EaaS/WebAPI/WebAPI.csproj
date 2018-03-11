@@ -30,6 +30,7 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LMS.Interfaces\LMS.Interfaces.csproj" />
     <ProjectReference Include="..\PID.Interfaces\PID.Interfaces.csproj" />
   </ItemGroup>
 

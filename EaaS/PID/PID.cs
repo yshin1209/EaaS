@@ -21,14 +21,25 @@ namespace PID
     [StatePersistence(StatePersistence.Persisted)]
     internal class PID : Actor, IPID
     {
-       
+        /// <summary>
+        /// Initializes a new instance of PID
+        /// </summary>
+        /// <param name="actorService">The Microsoft.ServiceFabric.Actors.Runtime.ActorService that will host this actor instance.</param>
+        /// <param name="actorId">The Microsoft.ServiceFabric.Actors.ActorId for this actor instance.</param>
         public PID(ActorService actorService, ActorId actorId)
             : base(actorService, actorId)
         {
         }
-
+        /// <summary>
+        /// This method is called whenever an actor is activated.
+        /// An actor is activated the first time any of its methods are invoked.
+        /// </summary>
         protected override Task OnActivateAsync()
         {
+            // The StateManager is this actor's private state store.
+            // Data stored in the StateManager will be replicated for high-availability for actors that use volatile or persisted state storage.
+            // Any serializable object can be saved in the StateManager.
+            // For more information, see https://aka.ms/servicefabricactorsstateserialization
             ActorEventSource.Current.ActorMessage(this, "PID Actor activated.");
             this.StateManager.TryAddStateAsync<double>("oldError", 0);
             this.StateManager.TryAddStateAsync<double>("sumError", 0);
@@ -48,8 +59,6 @@ namespace PID
             var sumErrorTask = this.StateManager.GetStateAsync<double>("sumError");
             var oldError = oldErrorTask.Result;
             var sumError = sumErrorTask.Result;
-
-
 
             //PID control
             var newError = desiredValue - actualValue;

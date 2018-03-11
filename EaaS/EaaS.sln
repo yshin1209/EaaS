@@ -5,11 +5,15 @@ VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "Application", "Application\Application.sfproj", "{1F662297-B45A-4EC8-A24D-0F729E086CD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{DDBBDF5B-FD1A-45EE-8FED-003C555F1D8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{DDBBDF5B-FD1A-45EE-8FED-003C555F1D8A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PID", "PID\PID.csproj", "{6CD5B458-EBAF-45BF-B18E-84A43786A792}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PID.Interfaces", "PID.Interfaces\PID.Interfaces.csproj", "{AA16F014-211A-4AEE-A293-D5A22F52295D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LMS", "LMS\LMS.csproj", "{D7B47675-6B66-4E34-8F3B-DB775941B634}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LMS.Interfaces", "LMS.Interfaces\LMS.Interfaces.csproj", "{19DB7CF1-0ACB-404A-931D-6A03F38320F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +51,18 @@ Global
 		{AA16F014-211A-4AEE-A293-D5A22F52295D}.Release|Any CPU.ActiveCfg = Release|x64
 		{AA16F014-211A-4AEE-A293-D5A22F52295D}.Release|x64.ActiveCfg = Release|x64
 		{AA16F014-211A-4AEE-A293-D5A22F52295D}.Release|x64.Build.0 = Release|x64
+		{D7B47675-6B66-4E34-8F3B-DB775941B634}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{D7B47675-6B66-4E34-8F3B-DB775941B634}.Debug|x64.ActiveCfg = Debug|x64
+		{D7B47675-6B66-4E34-8F3B-DB775941B634}.Debug|x64.Build.0 = Debug|x64
+		{D7B47675-6B66-4E34-8F3B-DB775941B634}.Release|Any CPU.ActiveCfg = Release|x64
+		{D7B47675-6B66-4E34-8F3B-DB775941B634}.Release|x64.ActiveCfg = Release|x64
+		{D7B47675-6B66-4E34-8F3B-DB775941B634}.Release|x64.Build.0 = Release|x64
+		{19DB7CF1-0ACB-404A-931D-6A03F38320F3}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{19DB7CF1-0ACB-404A-931D-6A03F38320F3}.Debug|x64.ActiveCfg = Debug|x64
+		{19DB7CF1-0ACB-404A-931D-6A03F38320F3}.Debug|x64.Build.0 = Debug|x64
+		{19DB7CF1-0ACB-404A-931D-6A03F38320F3}.Release|Any CPU.ActiveCfg = Release|x64
+		{19DB7CF1-0ACB-404A-931D-6A03F38320F3}.Release|x64.ActiveCfg = Release|x64
+		{19DB7CF1-0ACB-404A-931D-6A03F38320F3}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
