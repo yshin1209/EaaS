@@ -4,13 +4,13 @@ University of Connecticut CSMLab (Computational and Systems Medicine Lab) http:/
 ### Instruction
 Download and run PID_client.m (MATLAB file) on your computer where MATLAB is installed (R2014b or higher). This client will remotely consume the PID control web service (REST API) priovided by the Azure Service Fabric microservices application hosted at csmlab8.uconn.edu. The result is shown below:
 
-<img align="left" width="500" height="500" src="screenshots/pid_client.png">
+<img align="center" width="500" height="500" src="screenshots/pid_client.png">
 
 ## LMS (Least Mean Squares) Adaptive Parameter Estimaiton as a Service
 ### Instruction
 Download and run LMS_client.m (MATLAB file) on your computer where MATLAB is installed (R2014b or higher). This client will remotely consume the LMS control web service (REST API) priovided by the Azure Service Fabric microservices application hosted at csmlab8.uconn.edu. The result is shown below:
 
-<img align="left" width="500" height="500" src="screenshots/lms_client.png">
+<img align="center" width="500" height="500" src="screenshots/lms_client.png">
 
 #### Azure Service Fabric https://azure.microsoft.com/en-us/services/service-fabric/
 
