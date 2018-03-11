@@ -1,7 +1,5 @@
 % LMS (Least Mean Squares) Adaptive Parameter Estimation web service client
 % Yong-Jun Shin (2018)
-clear all
-close all
 
 N = 100;                       % number of iteration
 x = zeros(N,1);                % output signal x
