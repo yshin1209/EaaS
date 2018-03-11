@@ -1,8 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ServiceManifest Name="LMSPkg"
-                 Version="1.0.0"
-                 xmlns="http://schemas.microsoft.com/2011/01/fabric"
-                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<ServiceManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="LMSPkg" Version="1.0.0" xmlns="http://schemas.microsoft.com/2011/01/fabric">
+  <ServiceTypes>
+    <StatefulServiceType ServiceTypeName="LMSActorServiceType" HasPersistedState="true">
+      <Extensions>
+        <Extension Name="__GeneratedServiceType__" GeneratedId="1d32e24c-2243-4fdb-929e-8a0d49e37d64|Persisted">
+          <GeneratedNames xmlns="http://schemas.microsoft.com/2015/03/fabact-no-schema">
+            <DefaultService Name="LMSActorService" />
+            <ServiceEndpoint Name="LMSActorServiceEndpoint" />
+            <ReplicatorEndpoint Name="LMSActorServiceReplicatorEndpoint" />
+            <ReplicatorConfigSection Name="LMSActorServiceReplicatorConfig" />
+            <ReplicatorSecurityConfigSection Name="LMSActorServiceReplicatorSecurityConfig" />
+            <StoreConfigSection Name="LMSActorServiceLocalStoreConfig" />
+          </GeneratedNames>
+        </Extension>
+      </Extensions>
+    </StatefulServiceType>
+  </ServiceTypes>
+  <CodePackage Name="Code" Version="1.0.0">
+    <EntryPoint>
+      <ExeHost>
+        <Program>LMS.exe</Program>
+      </ExeHost>
+    </EntryPoint>
+  </CodePackage>
+  <ConfigPackage Name="Config" Version="1.0.0" />
+  <Resources>
+    <Endpoints>
+      <Endpoint Name="LMSActorServiceEndpoint" />
+      <Endpoint Name="LMSActorServiceReplicatorEndpoint" />
+    </Endpoints>
+  </Resources>
   <!-- The content will be generated during build -->
 </ServiceManifest>

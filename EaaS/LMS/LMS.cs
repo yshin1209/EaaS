@@ -21,6 +21,7 @@ namespace LMS
     [StatePersistence(StatePersistence.Persisted)]
     internal class LMS : Actor, ILMS
     {
+        double[] result = new double[] { 0, 0, 0 };
         /// <summary>
         /// Initializes a new instance of LMS
         /// </summary>
@@ -30,7 +31,6 @@ namespace LMS
             : base(actorService, actorId)
         {
         }
-
         /// <summary>
         /// This method is called whenever an actor is activated.
         /// An actor is activated the first time any of its methods are invoked.
@@ -43,29 +43,62 @@ namespace LMS
             // Data stored in the StateManager will be replicated for high-availability for actors that use volatile or persisted state storage.
             // Any serializable object can be saved in the StateManager.
             // For more information, see https://aka.ms/servicefabricactorsstateserialization
-
-            return this.StateManager.TryAddStateAsync("count", 0);
+            ActorEventSource.Current.ActorMessage(this, "LMS Actor activated.");
+            this.StateManager.TryAddStateAsync<int>("timeDelay", 0);
+            this.StateManager.TryAddStateAsync<int>("counter", 0);
+            this.StateManager.TryAddStateAsync<List<double>>("inputValues", new List<double>());
+            this.StateManager.TryAddStateAsync<double>("estimatedParameter", 0);
+            return base.OnActivateAsync();
         }
 
-        /// <summary>
-        /// TODO: Replace with your own actor method.
-        /// </summary>
-        /// <returns></returns>
-        Task<int> ILMS.GetCountAsync(CancellationToken cancellationToken)
+        // Initialize the actor by resetting the counter to zero and by providing the timeDealy value
+        async Task<int> ILMS.StartLMSAsync(int timeDelay)
         {
-            return this.StateManager.GetStateAsync<int>("count", cancellationToken);
+            await this.StateManager.SetStateAsync<int>("counter", 0);
+            await this.StateManager.SetStateAsync<int>("timeDelay", timeDelay);
+            await this.StateManager.SetStateAsync<List<double>>("inputValues", new List<double>());
+            await this.StateManager.SetStateAsync<double>("estimatedParameter", 0);
+            return 0;
         }
 
-        /// <summary>
-        /// TODO: Replace with your own actor method.
-        /// </summary>
-        /// <param name="count"></param>
-        /// <returns></returns>
-        Task ILMS.SetCountAsync(int count, CancellationToken cancellationToken)
+        async Task<double[]> ILMS.RunLMSAsync(double stepSize, double inputValue, double outputValue)
         {
-            // Requests are not guaranteed to be processed in order nor at most once.
-            // The update function here verifies that the incoming count is greater than the current count to preserve order.
-            return this.StateManager.AddOrUpdateStateAsync("count", count, (key, value) => count > value ? count : value, cancellationToken);
+            // Retrive the stored counter value
+            var counter = await this.StateManager.GetStateAsync<int>("counter");
+            // Increase the counter value by 1
+            counter = counter + 1;
+            // Store the increased counter value
+            await this.StateManager.SetStateAsync<int>("counter", counter);
+
+            // Retrive the stored input value list
+            var inputValues = await this.StateManager.GetStateAsync<List<double>>("inputValues");
+            // Add the new input value to the list
+            inputValues.Add(inputValue);
+            // Store the list
+            await this.StateManager.SetStateAsync<List<double>>("inputValues", inputValues);
+
+            // Retrive stored timeDelay and estimatedParameter values
+            var timeDelay = await this.StateManager.GetStateAsync<int>("timeDelay");
+            var estimatedParameter = await this.StateManager.GetStateAsync<double>("estimatedParameter");
+
+            // LMS algorithm
+            if (counter > timeDelay)
+            { 
+                var estimatedOutput = estimatedParameter * inputValues[counter-timeDelay-1];
+                var estimationError = outputValue - estimatedOutput;
+                estimatedParameter = estimatedParameter + stepSize * inputValues[counter - timeDelay - 1] * estimationError;
+                result[0] = estimatedOutput;
+                result[1] = estimationError;
+                result[2] = estimatedParameter;
+                await this.StateManager.SetStateAsync<double>("estimatedParameter", estimatedParameter);
+            }
+            else
+            {
+                result[0] = 0;
+                result[1] = outputValue;
+                result[2] = estimatedParameter;
+            }
+            return result;
         }
     }
 }

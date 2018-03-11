@@ -5,6 +5,9 @@
     <Parameter Name="PIDActorService_PartitionCount" DefaultValue="10" />
     <Parameter Name="PIDActorService_MinReplicaSetSize" DefaultValue="3" />
     <Parameter Name="PIDActorService_TargetReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="LMSActorService_PartitionCount" DefaultValue="10" />
+    <Parameter Name="LMSActorService_MinReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="LMSActorService_TargetReplicaSetSize" DefaultValue="3" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
@@ -33,6 +36,11 @@
     <Service Name="PIDActorService" GeneratedIdRef="72cb8377-c668-42c8-a941-bf8922ca59ff|Persisted">
       <StatefulService ServiceTypeName="PIDActorServiceType" TargetReplicaSetSize="[PIDActorService_TargetReplicaSetSize]" MinReplicaSetSize="[PIDActorService_MinReplicaSetSize]">
         <UniformInt64Partition PartitionCount="[PIDActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+      </StatefulService>
+    </Service>
+    <Service Name="LMSActorService" GeneratedIdRef="1d32e24c-2243-4fdb-929e-8a0d49e37d64|Persisted">
+      <StatefulService ServiceTypeName="LMSActorServiceType" TargetReplicaSetSize="[LMSActorService_TargetReplicaSetSize]" MinReplicaSetSize="[LMSActorService_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[LMSActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
       </StatefulService>
     </Service>
   </DefaultServices>

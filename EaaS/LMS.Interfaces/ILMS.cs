@@ -13,17 +13,7 @@ namespace LMS.Interfaces
     /// </summary>
     public interface ILMS : IActor
     {
-        /// <summary>
-        /// TODO: Replace with your own actor method.
-        /// </summary>
-        /// <returns></returns>
-        Task<int> GetCountAsync(CancellationToken cancellationToken);
-
-        /// <summary>
-        /// TODO: Replace with your own actor method.
-        /// </summary>
-        /// <param name="count"></param>
-        /// <returns></returns>
-        Task SetCountAsync(int count, CancellationToken cancellationToken);
+        Task<int> StartLMSAsync(int timeDelay);
+        Task<double[]> RunLMSAsync(double stepSize, double inputValue, double outputValue);
     }
 }
