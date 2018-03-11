@@ -9,7 +9,7 @@ response = zeros(N,3);         % web service response [estiated output, estimati
 newServiceId = '1';            % new Actor service ID
 timeDelay = 1;                 % time dealy between the input and the output
 timeDelay_value = num2str(timeDelay);  % convert timeDelay into string
-stepSize = 0.001;             % LMS step size
+stepSize = 0.001;              % LMS step size
 stepSize_value = num2str(stepSize);    % convert stepSize into string
 % initialize LMS web servie with newServiceId and timeDelay_value
 url = ['http://csmlab8.uconn.edu/api/lms/' newServiceId '/' timeDelay_value];
