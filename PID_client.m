@@ -1,5 +1,6 @@
 % PID (Proportional-Integral_Derivative) web service client
 % Yong-Jun Shin (2018)
+% For more information, please visit https://github.com/yshin1209/EaaS
 
 N = 63;                     % number of iteration
 x = zeros(N,1);             % output (measured) signal x
