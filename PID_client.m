@@ -10,8 +10,9 @@ newServiceId = '1';         % new Actor service ID
 Kp = num2str(2);            % the proportional parameter Kp
 Ki = num2str(2);            % the integral parameter Ki
 Kd = num2str(0.8);          % the derivative parameter Kd
+timeCom = zeros(N,1);   % thetime it takes for the round-trip between the client and the cloud
 
-for n= 3:N
+for n= 2:N
     % add disturbance (d) to x at time > 50
     if n> 50 d=60; 
     else d=0;
@@ -33,12 +34,18 @@ for n= 3:N
     
     % call the PID web service which returns control signal u(n)
     url = ['http://csmlab8.uconn.edu/api/pid/' newServiceId '/' reset_value '/' x_value '/' r_value '/' Kp '/' Ki '/' Kd];
-    u(n) = webread(url);   
+    tic;
+    u(n) = webread(url); 
+    timeCom(n) = toc; % time for the round-trip between the client and the cloud
 end
 
-figure
 plot(1:N, r, 'r', 1:N, x, 'b', 1:N, u, 'g');
 legend('r (reference)', 'x (output)', 'u (control)');
 xlabel('time(n)');
 ylabel('magnitude (arbitrary unit)');
 axis([0 N 0 450]);
+
+figure
+plot (1:N, timeCom, '*')
+xlabel('time(n)');
+ylabel('time for the round-trip between the client and the cloud');
