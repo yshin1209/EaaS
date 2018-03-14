@@ -9,7 +9,7 @@ https://www.edx.org/course/introduction-control-system-design-first-mitx-6-302-0
 ### Instruction
 Download and run PID_client.m (MATLAB file) on your computer where MATLAB is installed (R2014b or higher) or using MATLAB Online (https://www.mathworks.com/products/matlab-online.html). This client will remotely consume the PID control web service (REST API) priovided by the Azure Service Fabric microservices application hosted at csmlab8.uconn.edu. The result is shown below:
 
-<img align="center" width="500" height="500" src="screenshots/pid_client.png">
+<img align="center" width="500" height="500" src="screenshots/PID_client_result.png">
 
 ## LMS (Least Mean Squares) Adaptive Parameter Estimation as a Service
 #### For more information about LMS adaptive filter, see "Adaptive Filters" video lectures by Prof. Ali Sayed (UCLA):
@@ -17,7 +17,7 @@ http://iracema.icsl.ucla.edu/index.php?option=com_content&task=view&sectionid=10
 ### Instruction
 Download and run LMS_client.m (MATLAB file) on your computer where MATLAB is installed (R2014b or higher) or using MATLAB Online (https://www.mathworks.com/products/matlab-online.html). This client will remotely consume the LMS adaptive parameter estimation web service (REST API) priovided by the Azure Service Fabric microservices application hosted at csmlab8.uconn.edu. The result is shown below:
 
-<img align="center" width="500" height="500" src="screenshots/lms_client2.png">
+<img align="center" width="500" height="500" src="screenshots/LMS_client_result.png">
 
 
 
