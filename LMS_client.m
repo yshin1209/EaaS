@@ -12,6 +12,8 @@ timeDelay = 1;                 % time dealy between the input and the output
 timeDelay_value = num2str(timeDelay);  % convert timeDelay into string
 stepSize = 0.001;              % LMS step size
 stepSize_value = num2str(stepSize);    % convert stepSize into string
+timeCom = zeros(N,1);          % time for the round-trip between the client and the cloud
+
 % initialize LMS web servie with newServiceId and timeDelay_value
 url = ['http://csmlab8.uconn.edu/api/lms/' newServiceId '/' timeDelay_value];
 webread(url); 
@@ -26,19 +28,26 @@ for n = timeDelay+1:N
 
     % call the LMS web service which returns response [estiated output, estimation error, estimated parameter]
     url = ['http://csmlab8.uconn.edu/api/lms/' newServiceId '/' stepSize_value '/' u_value '/' x_value];
+    tic
     response(n,:) = webread(url);
+    timeCom(n) = toc; % time for the round-trip between the client and the cloud
 end
 
 estOutput = response(:,1);
 estError = response(:,2);
 estParameter = response(:,3);
 
-figure
+subplot(2,1,1);
 plot(1:N, x, 'b', 1:N, estOutput, 'g', 1:N, estError, 'r', 1:N, estParameter, '*');
 legend('x (output)', 'estimated x', 'estimation error', 'estimated parameter');
-xlabel('time(n)');
+xlabel('time (n)');
 ylabel('magnitude (arbitrary unit)');
 parameter_value = num2str(parameter);
 txt1 = ['true parameter value = ' parameter_value] ;
 text(30,3,txt1);
 axis([0 N -5 15]);
+
+subplot(2,1,2);
+plot (1:N, timeCom, '*')
+xlabel('time (n)');
+ylabel('round-trip time (second)');
