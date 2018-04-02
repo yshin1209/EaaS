@@ -30,6 +30,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LA\LA.csproj" />
     <ProjectReference Include="..\LMS\LMS.csproj" />
     <ProjectReference Include="..\PID\PID.csproj" />
     <ProjectReference Include="..\WebAPI\WebAPI.csproj" />

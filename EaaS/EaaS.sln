@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LMS", "LMS\LMS.csproj", "{D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LMS.Interfaces", "LMS.Interfaces\LMS.Interfaces.csproj", "{19DB7CF1-0ACB-404A-931D-6A03F38320F3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LA", "LA\LA.csproj", "{B68BDEDF-A3AC-4311-A595-BA296AC97D4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LA.Interfaces", "LA.Interfaces\LA.Interfaces.csproj", "{368ADB12-7560-40DF-9C99-026DAF14E19F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +67,18 @@ Global
 		{19DB7CF1-0ACB-404A-931D-6A03F38320F3}.Release|Any CPU.ActiveCfg = Release|x64
 		{19DB7CF1-0ACB-404A-931D-6A03F38320F3}.Release|x64.ActiveCfg = Release|x64
 		{19DB7CF1-0ACB-404A-931D-6A03F38320F3}.Release|x64.Build.0 = Release|x64
+		{B68BDEDF-A3AC-4311-A595-BA296AC97D4B}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{B68BDEDF-A3AC-4311-A595-BA296AC97D4B}.Debug|x64.ActiveCfg = Debug|x64
+		{B68BDEDF-A3AC-4311-A595-BA296AC97D4B}.Debug|x64.Build.0 = Debug|x64
+		{B68BDEDF-A3AC-4311-A595-BA296AC97D4B}.Release|Any CPU.ActiveCfg = Release|x64
+		{B68BDEDF-A3AC-4311-A595-BA296AC97D4B}.Release|x64.ActiveCfg = Release|x64
+		{B68BDEDF-A3AC-4311-A595-BA296AC97D4B}.Release|x64.Build.0 = Release|x64
+		{368ADB12-7560-40DF-9C99-026DAF14E19F}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{368ADB12-7560-40DF-9C99-026DAF14E19F}.Debug|x64.ActiveCfg = Debug|x64
+		{368ADB12-7560-40DF-9C99-026DAF14E19F}.Debug|x64.Build.0 = Debug|x64
+		{368ADB12-7560-40DF-9C99-026DAF14E19F}.Release|Any CPU.ActiveCfg = Release|x64
+		{368ADB12-7560-40DF-9C99-026DAF14E19F}.Release|x64.ActiveCfg = Release|x64
+		{368ADB12-7560-40DF-9C99-026DAF14E19F}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
