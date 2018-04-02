@@ -7,6 +7,8 @@ using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Runtime;
 using Microsoft.ServiceFabric.Actors.Client;
 using LA.Interfaces;
+using ClassLibrary;
+using Newtonsoft.Json;
 
 namespace LA
 {
@@ -18,6 +20,9 @@ namespace LA
     ///  - Volatile: State is kept in memory only and replicated.
     ///  - None: State is kept in memory only and not replicated.
     /// </remarks>
+    /// 
+
+
     [StatePersistence(StatePersistence.Persisted)]
     internal class LA : Actor, ILA
     {
@@ -47,25 +52,55 @@ namespace LA
             return this.StateManager.TryAddStateAsync("count", 0);
         }
 
-        /// <summary>
-        /// TODO: Replace with your own actor method.
-        /// </summary>
-        /// <returns></returns>
-        Task<int> ILA.GetCountAsync(CancellationToken cancellationToken)
+        Task<double> ILA.VecVecMultiply(double[] vector1, double[] vector2)
         {
-            return this.StateManager.GetStateAsync<int>("count", cancellationToken);
+            var n = vector1.Length;
+            double product = 0;
+            for (int i = 0; i < n; i++)
+            {
+                product = product + vector1[i] * vector2[i];
+            }
+            return Task.FromResult<double>(product);
         }
 
-        /// <summary>
-        /// TODO: Replace with your own actor method.
-        /// </summary>
-        /// <param name="count"></param>
-        /// <returns></returns>
-        Task ILA.SetCountAsync(int count, CancellationToken cancellationToken)
+        Task<double[]> ILA.MatVecMultiply(string json)
         {
-            // Requests are not guaranteed to be processed in order nor at most once.
-            // The update function here verifies that the incoming count is greater than the current count to preserve order.
-            return this.StateManager.AddOrUpdateStateAsync("count", count, (key, value) => count > value ? count : value, cancellationToken);
+            MatVecMulClass input = JsonConvert.DeserializeObject<MatVecMulClass>(json);
+
+            double[,] matrix = input.Matrix;
+            double[] vector = input.Vector;
+            var m = matrix.GetLength(0);
+            var n = matrix.GetLength(1);
+            double[] product = new double[m];
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    product[i] = product[i] + matrix[i,j] * vector[j];
+                }
+            }
+
+            return Task.FromResult<double[]>(product);
         }
+
+        Task<double[][]> ILA.MatMatMultiply(double[][] matrix1, double[][] matrix2)
+        {
+            var m = matrix1.GetLength(0);
+            var r = matrix1.GetLength(1);
+            var n = matrix2.GetLength(1);
+            double[][] product = new double[m][];
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; i < n; j++)
+                {
+                    for (int k = 0; i < r; k++)
+                    {
+                        product[i][j] = product[i][j] + matrix1[i][k] * matrix2[k][j];
+                    }
+                }
+            }
+            return Task.FromResult<double[][]>(product);
+        }
+
     }
 }
