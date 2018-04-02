@@ -52,8 +52,11 @@ namespace LA
             return this.StateManager.TryAddStateAsync("count", 0);
         }
 
-        Task<double> ILA.VecVecMultiply(double[] vector1, double[] vector2)
+        Task<double> ILA.VecVecMultiply(string jsonInput)
         {
+            VecVecMulClass inputObject = JsonConvert.DeserializeObject<VecVecMulClass>(jsonInput);
+            double[] vector1 = inputObject.Vector1;
+            double[] vector2 = inputObject.Vector2;
             var n = vector1.Length;
             double product = 0;
             for (int i = 0; i < n; i++)
@@ -63,12 +66,12 @@ namespace LA
             return Task.FromResult<double>(product);
         }
 
-        Task<double[]> ILA.MatVecMultiply(string json)
+        Task<double[]> ILA.MatVecMultiply(string jsonInput)
         {
-            MatVecMulClass input = JsonConvert.DeserializeObject<MatVecMulClass>(json);
+            MatVecMulClass inputObject = JsonConvert.DeserializeObject<MatVecMulClass>(jsonInput);
 
-            double[,] matrix = input.Matrix;
-            double[] vector = input.Vector;
+            double[,] matrix = inputObject.Matrix;
+            double[] vector = inputObject.Vector;
             var m = matrix.GetLength(0);
             var n = matrix.GetLength(1);
             double[] product = new double[m];
@@ -79,28 +82,30 @@ namespace LA
                     product[i] = product[i] + matrix[i,j] * vector[j];
                 }
             }
-
             return Task.FromResult<double[]>(product);
         }
 
-        Task<double[][]> ILA.MatMatMultiply(double[][] matrix1, double[][] matrix2)
+        Task<string> ILA.MatMatMultiply(string jsonInput)
         {
+            MatMatMulClass inputObject = JsonConvert.DeserializeObject<MatMatMulClass>(jsonInput);
+            double[,] matrix1 = inputObject.Matrix1;
+            double[,] matrix2 = inputObject.Matrix2;
             var m = matrix1.GetLength(0);
             var r = matrix1.GetLength(1);
             var n = matrix2.GetLength(1);
-            double[][] product = new double[m][];
+            double[,] product = new double[m,n];
             for (int i = 0; i < m; i++)
             {
-                for (int j = 0; i < n; j++)
+                for (int j = 0; j < n; j++)
                 {
-                    for (int k = 0; i < r; k++)
+                    for (int k = 0; k < r; k++)
                     {
-                        product[i][j] = product[i][j] + matrix1[i][k] * matrix2[k][j];
+                        product[i,j] = product[i,j] + matrix1[i,k] * matrix2[k,j];
                     }
                 }
             }
-            return Task.FromResult<double[][]>(product);
+            string jsonProduct = JsonConvert.SerializeObject(product);
+            return Task.FromResult<string>(jsonProduct);
         }
-
     }
 }

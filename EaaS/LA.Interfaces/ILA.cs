@@ -15,8 +15,8 @@ namespace LA.Interfaces
     /// </summary>
     public interface ILA : IActor
     {
-        Task<double> VecVecMultiply(double[] vector1, double[] vector2);
-        Task<double[]> MatVecMultiply(string json);
-        Task<double[][]> MatMatMultiply(double[][] matrix1, double[][] matrix2);
+        Task<double> VecVecMultiply(string jsonInput);
+        Task<double[]> MatVecMultiply(string jsonInput);
+        Task<string> MatMatMultiply(string JsonInput);
     }
 }

@@ -12,20 +12,6 @@ using ClassLibrary;
 
 namespace WebAPI.Controllers
 {
-    public class VecVecMulClass
-    {
-        public int Id { get; set; }
-        public double[] Vector1 { get; set; }
-        public double[] Vector2 { get; set; }
-    }
- 
-
-    public class MatMatMulClass
-    {
-        public int Id { get; set; }
-        public double[][] Matrix1 { get; set; }
-        public double[][] Matrix2 { get; set; }
-    }
 
     [Produces("application/json")]
     public class LAController : Controller
@@ -35,11 +21,10 @@ namespace WebAPI.Controllers
         public async Task<double> Blas1([FromBody] VecVecMulClass input)
         {
             int id = input.Id;
-            double[] vector1 = input.Vector1;
-            double[] vector2 = input.Vector2;
             ActorId actorId = new ActorId(id);
             var actor = ActorProxy.Create<ILA>(actorId, new Uri("fabric:/Application/LAActorService"));
-            double output = await actor.VecVecMultiply(vector1, vector2);
+            string jsonInput = JsonConvert.SerializeObject(input);
+            double output = await actor.VecVecMultiply(jsonInput);
             return output;
         }
         [HttpPost]
@@ -49,21 +34,22 @@ namespace WebAPI.Controllers
             int id = input.Id;
             ActorId actorId = new ActorId(id);
             var actor = ActorProxy.Create<ILA>(actorId, new Uri("fabric:/Application/LAActorService"));
-            string json = JsonConvert.SerializeObject(input);
-            double[] output = await actor.MatVecMultiply(json);
+            string jsonInput = JsonConvert.SerializeObject(input);
+            double[] output = await actor.MatVecMultiply(jsonInput);
             return output;
         }
 
         [HttpPost]
         [Route("api/la/blas3")]
-        public async Task<double[][]> Blas3([FromBody] MatMatMulClass input)
+        public async Task<string> Blas3([FromBody] MatMatMulClass input)
         {
             int id = input.Id;
-            double[][] matrix1 = input.Matrix1;
-            double[][] matrix2 = input.Matrix2;
+            double[,] matrix1 = input.Matrix1;
+            double[,] matrix2 = input.Matrix2;
             ActorId actorId = new ActorId(id);
             var actor = ActorProxy.Create<ILA>(actorId, new Uri("fabric:/Application/LAActorService"));
-            double[][] output = await actor.MatMatMultiply(matrix1, matrix2);
+            string jsonInput = JsonConvert.SerializeObject(input);
+            string output = await actor.MatMatMultiply(jsonInput);
             return output;
         }
     }
