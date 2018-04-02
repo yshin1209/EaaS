@@ -8,5 +8,8 @@
     <Parameter Name="LMSActorService_PartitionCount" Value="1" />
     <Parameter Name="LMSActorService_TargetReplicaSetSize" Value="1" />
     <Parameter Name="LMSActorService_MinReplicaSetSize" Value="1" />
+    <Parameter Name="LAActorService_PartitionCount" Value="1" />
+    <Parameter Name="LAActorService_TargetReplicaSetSize" Value="1" />
+    <Parameter Name="LAActorService_MinReplicaSetSize" Value="1" />
   </Parameters>
 </Application>

@@ -25,11 +25,14 @@
     <PackageReference Include="Microsoft.ServiceFabric.Services" Version="3.0.467" />
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="1.1.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ClassLibrary\ClassLibrary.csproj" />
+    <ProjectReference Include="..\LA.Interfaces\LA.Interfaces.csproj" />
     <ProjectReference Include="..\LMS.Interfaces\LMS.Interfaces.csproj" />
     <ProjectReference Include="..\PID.Interfaces\PID.Interfaces.csproj" />
   </ItemGroup>
