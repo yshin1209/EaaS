@@ -1,5 +1,7 @@
-% BLAS 1
+% Yong-Jun Shin (2018)
+% BLAS (Basic Linear Algebra Subprograms) 1
 % Vector-Vector Multiplication
+% For more information, please see http://www.netlib.org/blas/
 
 clc;
 clear all;
@@ -14,8 +16,10 @@ options = weboptions('MediaType','application/json');
 response = webwrite (url, data, options);
 
 %%
-% BLAS 2
+% BLAS (Basic Linear Algebra Subprograms) 2
 % Matrix-Vector Multiplication
+% For more information, please see http://www.netlib.org/blas/
+
 clc;
 clear all;
 
@@ -30,8 +34,10 @@ response = webwrite (url, data, options);
 
 
 %%
-% BLAS 3
+% BLAS (Basic Linear Algebra Subprograms) 3
 % Matrix-Matrix Multiplication
+% For more information, please see http://www.netlib.org/blas/
+
 clc;
 clear all;
 
