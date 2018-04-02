@@ -32,7 +32,6 @@ data = struct('Id', id, 'Matrix', matrix, 'Vector', vector);
 options = weboptions('MediaType','application/json');
 response = webwrite (url, data, options)
 
-
 %%
 % BLAS (Basic Linear Algebra Subprograms) 3
 % Matrix-Matrix Multiplication
