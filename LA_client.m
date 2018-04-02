@@ -13,7 +13,7 @@ vector2 = rand(N,1);
 url = 'http://csmlab8.uconn.edu/api/la/blas1';
 data = struct('Id', id, 'Vector1', vector1, 'Vector2', vector2);
 options = weboptions('MediaType','application/json');
-response = webwrite (url, data, options);
+response = webwrite (url, data, options)
 
 %%
 % BLAS (Basic Linear Algebra Subprograms) 2
@@ -30,7 +30,7 @@ vector = rand(N,1);
 url = 'http://csmlab8.uconn.edu/api/la/blas2';
 data = struct('Id', id, 'Matrix', matrix, 'Vector', vector);
 options = weboptions('MediaType','application/json');
-response = webwrite (url, data, options);
+response = webwrite (url, data, options)
 
 
 %%
