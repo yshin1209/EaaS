@@ -52,9 +52,25 @@ namespace LA
             return this.StateManager.TryAddStateAsync("count", 0);
         }
 
+        Task<string> ILA.MultiplyVectorScalar(string jsonInput)
+        {
+            VecScaOpClass inputObject = JsonConvert.DeserializeObject<VecScaOpClass>(jsonInput);
+            double[] vector = inputObject.Vector;
+            double scalar = inputObject.Scalar;
+            var n = vector.Length;
+            double[] product = new double[n];
+            for (int i = 0; i < n; i++)
+            {
+                product[i] = scalar*vector[i];
+            }
+
+            string jsonOutput = JsonConvert.SerializeObject(product);
+            return Task.FromResult<string>(jsonOutput);
+        }
+
         Task<double> ILA.VecVecMultiply(string jsonInput)
         {
-            VecVecMulClass inputObject = JsonConvert.DeserializeObject<VecVecMulClass>(jsonInput);
+            VecVecOpClass inputObject = JsonConvert.DeserializeObject<VecVecOpClass>(jsonInput);
             double[] vector1 = inputObject.Vector1;
             double[] vector2 = inputObject.Vector2;
             var n = vector1.Length;
@@ -64,6 +80,22 @@ namespace LA
                 product = product + vector1[i] * vector2[i];
             }
             return Task.FromResult<double>(product);
+        }
+
+        Task<string> ILA.VecVecSubstract(string jsonInput)
+        {
+            VecVecOpClass inputObject = JsonConvert.DeserializeObject<VecVecOpClass>(jsonInput);
+            double[] vector1 = inputObject.Vector1;
+            double[] vector2 = inputObject.Vector2;
+            var n = vector1.Length;
+            double[] difference = new double[n];
+            for (int i = 0; i < n; i++)
+            {
+                difference[i] = vector1[i] - vector2[i];
+            }
+
+            string jsonOutput = JsonConvert.SerializeObject(difference);
+            return Task.FromResult<string>(jsonOutput);
         }
 
         Task<double[]> ILA.MatVecMultiply(string jsonInput)

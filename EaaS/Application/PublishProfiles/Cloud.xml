@@ -21,5 +21,8 @@
                                     ServerCertThumbprint="0123456789012345678901234567890123456789" />
   -->
   <ClusterConnectionParameters />
-  <ApplicationParameterFile Path="..\ApplicationParameters\Cloud.xml" />
+  <ApplicationParameterFile Path="..\ApplicationParameters\Local.5Node.xml" />
+  <UpgradeDeployment Mode="UnmonitoredAuto" Enabled="true">
+    <Parameters UpgradeReplicaSetCheckTimeoutSec="1" Force="True" />
+  </UpgradeDeployment>
 </PublishProfile>
