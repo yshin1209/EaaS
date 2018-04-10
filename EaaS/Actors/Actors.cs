@@ -7,6 +7,7 @@ using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Runtime;
 using Microsoft.ServiceFabric.Actors.Client;
 using Actors.Interfaces;
+using ClassLibrary;
 
 namespace Actors
 {
@@ -41,28 +42,29 @@ namespace Actors
             return Task.FromResult(0);
         }
 
-        Task IActors.AddFieldAsync(string fieldName)
+        Task IActors.AddVariableAsync(ActorData actorData )
         {
-            this.StateManager.TryAddStateAsync(fieldName, "");
+            this.StateManager.TryAddStateAsync(actorData.VariableName, "");
+            this.StateManager.SetStateAsync(actorData.VariableName, actorData.VariableValue);
             return Task.FromResult(0);
         }
 
-        Task IActors.RemoveFieldAsync(string fieldName)
+        Task IActors.RemoveVariableAsync(string variableName)
         {
-            this.StateManager.TryRemoveStateAsync(fieldName);
+            this.StateManager.TryRemoveStateAsync(variableName);
             return Task.FromResult(0);
         }
 
-        Task<string> IActors.GetFieldValueAsync(string fieldName)
+        Task<string> IActors.GetVariableValueAsync(string variableName)
         {
-            var fieldValue = this.StateManager.GetStateAsync<string>(fieldName);
-            return fieldValue;
+            var variableValue = this.StateManager.GetStateAsync<string>(variableName);
+            return variableValue;
         }
 
-        Task IActors.SetFieldValueAsync(string fieldName, string fieldValue)
+        Task IActors.SetVariableValueAsync(string variableName, string variableValue)
         {
 
-            this.StateManager.SetStateAsync(fieldName, fieldValue);
+            this.StateManager.SetStateAsync(variableName, variableValue);
             return Task.FromResult(0);
         }
     }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.ServiceFabric.Actors;
+using ClassLibrary;
 
 namespace Actors.Interfaces
 {
@@ -14,9 +15,9 @@ namespace Actors.Interfaces
     public interface IActors : IActor
     {
         Task CreateActorAsync();
-        Task AddFieldAsync(string fieldName);
-        Task RemoveFieldAsync(string fieldName);
-        Task<string> GetFieldValueAsync(string fieldName);
-        Task SetFieldValueAsync(string fieldName, string fieldValue);
+        Task AddVariableAsync(ActorData actorData);
+        Task RemoveVariableAsync(string fieldName);
+        Task<string> GetVariableValueAsync(string fieldName);
+        Task SetVariableValueAsync(string fieldName, string fieldValue);
     }
 }

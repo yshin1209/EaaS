@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Client;
 using Actors.Interfaces;
+using ClassLibrary;
 
 namespace WebAPI.Controllers
 {
@@ -43,60 +44,63 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("{id}/{fieldName}")]
-        public async Task<string> GetFieldValue(long id, string fieldName)
+        [Route("{id}/{variableName}")]
+        public async Task<string> GetVariableValue(long id, string variableName)
         {
             ActorId actorId = new ActorId(id);
             var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
-            var fieldValue = await actor.GetFieldValueAsync(fieldName);
-            return fieldValue;
+            var variableValue = await actor.GetVariableValueAsync(variableName);
+            return variableValue;
         }
 
         [HttpPost]
-        [Route("getFieldValue")]
-        public async Task<string> PostGetFieldValue([FromBody] ActorData actorData)
+        [Route("getVariableValue")]
+        public async Task<string> PostGetVariableValue([FromBody] ActorData actorData)
         {
             ActorId actorId = new ActorId(actorData.id);
             var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
-            var response = await actor.GetFieldValueAsync(actorData.fieldName);
-            return (response);
+            var variableValue = await actor.GetVariableValueAsync(actorData.VariableName);
+            return (variableValue);
         }
 
         [HttpPost]
-        [Route("addField")]
-        public async Task<string> PostAddField([FromBody] ActorData actorData)
+        [Route("addVariable")]
+        public async Task<string> PostAddVariable([FromBody] ActorData actorData)
         {
             ActorId actorId = new ActorId(actorData.id);
             var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
-            await actor.AddFieldAsync(actorData.fieldName);
-            return ("The new field " + actorData.fieldName + " was added");
+            await actor.AddVariableAsync(actorData);
+            return ("The new field " + actorData.VariableName + " was added");
         }
 
         [HttpPost]
-        [Route("removeField")]
-        public async Task<string> PostRemoveField([FromBody] ActorData actorData)
+        [Route("removeVariable")]
+        public async Task<string> PostRemoveVariable([FromBody] ActorData actorData)
         {
             ActorId actorId = new ActorId(actorData.id);
             var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
-            await actor.RemoveFieldAsync(actorData.fieldName);
-            return ("The field " + actorData.fieldName + " was removed");
+            await actor.RemoveVariableAsync(actorData.VariableName);
+            return ("The field " + actorData.VariableName + " was removed");
         }
 
         [HttpPost]
-        [Route("setFieldValue")]
-        public async Task<string> PostSetFieldValue([FromBody] ActorData actorData)
+        [Route("setVariableValue")]
+        public async Task<string> PostSetVariableValue([FromBody] ActorData actorData)
         {
             ActorId actorId = new ActorId(actorData.id);
             var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
-            await actor.SetFieldValueAsync(actorData.fieldName, actorData.fieldValue);
-            return ("The field " + actorData.fieldName + " was set to " + actorData.fieldValue);
+            await actor.SetVariableValueAsync(actorData.VariableName, actorData.VariableValue);
+            return ("The field " + actorData.VariableName + " was set to " + actorData.VariableValue);
         }
-    }
 
-    public class ActorData
-    {
-        public long id { get; set; }
-        public string fieldName { get; set; }
-        public string fieldValue { get; set; }
+        [HttpPost]
+        [Route("execute")]
+        public async Task<ActorId> PostExecuteMethod()
+        {
+            ActorId actorId = ActorId.CreateRandom();
+            var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
+            await actor.CreateActorAsync();
+            return actorId;
+        }
     }
 }

@@ -102,6 +102,10 @@
       <Project>{BCF0E714-57E2-47D3-825B-7A8FE6C1B271}</Project>
       <Name>Actors.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ClassLibrary\ClassLibrary.csproj">
+      <Project>{4bf122d7-c88d-48cc-b339-73356b041215}</Project>
+      <Name>ClassLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.ServiceFabric.Actors.2.5.216\build\Microsoft.ServiceFabric.Actors.targets" Condition="Exists('..\packages\Microsoft.ServiceFabric.Actors.2.5.216\build\Microsoft.ServiceFabric.Actors.targets')" />
