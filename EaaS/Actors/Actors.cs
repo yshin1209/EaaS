@@ -33,15 +33,36 @@ namespace Actors
         protected override Task OnActivateAsync()
         {
             ActorEventSource.Current.ActorMessage(this, "Actors Actor activated.");
-            this.StateManager.TryAddStateAsync<string>("actorName", "defaultName");
             return base.OnActivateAsync();
         }
 
-        Task IActors.CreateActorAsync(string actorName)
+        Task IActors.CreateActorAsync()
+        {
+            return Task.FromResult(0);
+        }
+
+        Task IActors.AddFieldAsync(string fieldName)
+        {
+            this.StateManager.TryAddStateAsync(fieldName, "");
+            return Task.FromResult(0);
+        }
+
+        Task IActors.RemoveFieldAsync(string fieldName)
+        {
+            this.StateManager.TryRemoveStateAsync(fieldName);
+            return Task.FromResult(0);
+        }
+
+        Task<string> IActors.GetFieldAsync(string fieldName)
+        {
+            var fieldValue = this.StateManager.GetStateAsync<string>(fieldName);
+            return fieldValue;
+        }
+
+        Task IActors.SetFieldAsync(string fieldName, string fieldValue)
         {
 
-            this.StateManager.SetStateAsync<string>("actorName", actorName);
-
+            this.StateManager.SetStateAsync(fieldName, fieldValue);
             return Task.FromResult(0);
         }
     }

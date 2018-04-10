@@ -13,6 +13,10 @@ namespace Actors.Interfaces
     /// </summary>
     public interface IActors : IActor
     {
-        Task CreateActorAsync(string actorName);
+        Task CreateActorAsync();
+        Task AddFieldAsync(string fieldName);
+        Task RemoveFieldAsync(string fieldName);
+        Task<string> GetFieldAsync(string fieldName);
+        Task SetFieldAsync(string fieldName, string fieldValue);
     }
 }

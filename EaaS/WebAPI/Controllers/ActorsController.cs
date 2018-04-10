@@ -14,19 +14,61 @@ namespace WebAPI.Controllers
     [Route("api/Actors")]
     public class ActorsController : Controller
     {
-        [HttpPost]
-        public async Task<ActorId> Post([FromBody] ActorData actorData)
+        [HttpGet]
+        [Route("{id}/{fieldName}")]
+        public async Task<string> GetField(long id, string fieldName)
         {
-            string actorName = actorData.actorName;
+            ActorId actorId = new ActorId(id);
+            var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
+            var response = await actor.GetFieldAsync(fieldName);
+            return response;
+        }
+
+
+        [HttpPost]
+        public async Task<ActorId> PostActor()
+        {
             ActorId actorId = ActorId.CreateRandom();
             var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
-            await actor.CreateActorAsync(actorName);
+            await actor.CreateActorAsync();
             return actorId;
+        }
+
+        [HttpPost]
+        [Route("addField")]
+        public async Task<string> PostAddField([FromBody] ActorData actorData)
+        {
+            ActorId actorId = new ActorId(actorData.id);
+            var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
+            await actor.AddFieldAsync(actorData.fieldName);
+            return ("The new field " + actorData.fieldName + " was added");
+        }
+
+        [HttpPost]
+        [Route("removeField")]
+        public async Task<string> PostRemoveField([FromBody] ActorData actorData)
+        {
+            ActorId actorId = new ActorId(actorData.id);
+            var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
+            await actor.RemoveFieldAsync(actorData.fieldName);
+            return ("The field " + actorData.fieldName + " was removed");
+        }
+
+        [HttpPost]
+        [Route("setField")]
+        public async Task<string> PostSetField([FromBody] ActorData actorData)
+        {
+            ActorId actorId = new ActorId(actorData.id);
+            var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
+            await actor.SetFieldAsync(actorData.fieldName, actorData.fieldValue);
+            return ("The field " + actorData.fieldName + " was set to " + actorData.fieldValue);
         }
     }
 
     public class ActorData
     {
-        public string actorName { get; set; }
+        public long id { get; set; }
+        public string fieldName { get; set; }
+        public string fieldValue { get; set; }
     }
 }
