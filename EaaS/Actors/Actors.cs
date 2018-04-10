@@ -53,13 +53,13 @@ namespace Actors
             return Task.FromResult(0);
         }
 
-        Task<string> IActors.GetFieldAsync(string fieldName)
+        Task<string> IActors.GetFieldValueAsync(string fieldName)
         {
             var fieldValue = this.StateManager.GetStateAsync<string>(fieldName);
             return fieldValue;
         }
 
-        Task IActors.SetFieldAsync(string fieldName, string fieldValue)
+        Task IActors.SetFieldValueAsync(string fieldName, string fieldValue)
         {
 
             this.StateManager.SetStateAsync(fieldName, fieldValue);

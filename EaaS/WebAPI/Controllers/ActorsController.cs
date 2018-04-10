@@ -11,37 +11,55 @@ using Actors.Interfaces;
 namespace WebAPI.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Actors")]
+    [Route("api/actors")]
     public class ActorsController : Controller
     {
-        [HttpGet]
-        [Route("{id}/{fieldName}")]
-        public async Task<string> GetField(long id, string fieldName)
-        {
-            ActorId actorId = new ActorId(id);
-            var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
-            var response = await actor.GetFieldAsync(fieldName);
-            return response;
-        }
-
+        // Create an actor (POST)
+        // Returns the unique actor ID (signed 64-bit integer)
+        // ID Type: long
+        // ID Range: -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807
         [HttpPost]
-        [Route("getField")]
-        public async Task<string> PostAddField([FromBody] ActorData actorData)
-        {
-            ActorId actorId = new ActorId(actorData.id);
-            var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
-            var response = await actor.GetFieldAsync(actorData.fieldName);
-            return (response);
-        }
-
-
-        [HttpPost]
-        public async Task<ActorId> PostActor()
+        [Route("create")]
+        public async Task<ActorId> PostCreateActor()
         {
             ActorId actorId = ActorId.CreateRandom();
             var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
             await actor.CreateActorAsync();
             return actorId;
+        }
+
+        // Create an actor (Get)
+        // Returns the unique actor ID (signed 64-bit integer)
+        // ID Type: long
+        // ID Range: -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807
+        [HttpGet]
+        [Route("create")]
+        public async Task<ActorId> GetCreateActor()
+        {
+            ActorId actorId = ActorId.CreateRandom();
+            var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
+            await actor.CreateActorAsync();
+            return actorId;
+        }
+
+        [HttpGet]
+        [Route("{id}/{fieldName}")]
+        public async Task<string> GetFieldValue(long id, string fieldName)
+        {
+            ActorId actorId = new ActorId(id);
+            var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
+            var fieldValue = await actor.GetFieldValueAsync(fieldName);
+            return fieldValue;
+        }
+
+        [HttpPost]
+        [Route("getFieldValue")]
+        public async Task<string> PostGetFieldValue([FromBody] ActorData actorData)
+        {
+            ActorId actorId = new ActorId(actorData.id);
+            var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
+            var response = await actor.GetFieldValueAsync(actorData.fieldName);
+            return (response);
         }
 
         [HttpPost]
@@ -65,12 +83,12 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        [Route("setField")]
-        public async Task<string> PostSetField([FromBody] ActorData actorData)
+        [Route("setFieldValue")]
+        public async Task<string> PostSetFieldValue([FromBody] ActorData actorData)
         {
             ActorId actorId = new ActorId(actorData.id);
             var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
-            await actor.SetFieldAsync(actorData.fieldName, actorData.fieldValue);
+            await actor.SetFieldValueAsync(actorData.fieldName, actorData.fieldValue);
             return ("The field " + actorData.fieldName + " was set to " + actorData.fieldValue);
         }
     }

@@ -16,7 +16,7 @@ namespace Actors.Interfaces
         Task CreateActorAsync();
         Task AddFieldAsync(string fieldName);
         Task RemoveFieldAsync(string fieldName);
-        Task<string> GetFieldAsync(string fieldName);
-        Task SetFieldAsync(string fieldName, string fieldValue);
+        Task<string> GetFieldValueAsync(string fieldName);
+        Task SetFieldValueAsync(string fieldName, string fieldValue);
     }
 }
