@@ -24,6 +24,16 @@ namespace WebAPI.Controllers
             return response;
         }
 
+        [HttpPost]
+        [Route("getField")]
+        public async Task<string> PostAddField([FromBody] ActorData actorData)
+        {
+            ActorId actorId = new ActorId(actorData.id);
+            var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
+            var response = await actor.GetFieldAsync(actorData.fieldName);
+            return (response);
+        }
+
 
         [HttpPost]
         public async Task<ActorId> PostActor()
