@@ -15,12 +15,27 @@ namespace WebAPI.Controllers
     [Route("api/actors")]
     public class ActorsController : Controller
     {
-        // Create an actor (POST)
-        // Returns the unique actor ID (signed 64-bit integer)
-        // ID Type: long
-        // ID Range: -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807
+
+        /// <summary>
+        /// Create an actor (POST)
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST api/actors
+        ///     {
+        ///     }
+        /// </remarks>
+        /// <param name="item"></param>
+        /// <returns>A newly created unique actor ID (signed 64-bit integer)</returns>
+        /// <returns> ID Type: long </returns>
+        /// <returns> ID Range: -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 </returns>
+        /// <response code="201">Returns the newly created actor ID</response>
+
         [HttpPost]
+        [ProducesResponseType(201)]
         [Route("create")]
+
         public async Task<ActorId> PostCreateActor()
         {
             ActorId actorId = ActorId.CreateRandom();
