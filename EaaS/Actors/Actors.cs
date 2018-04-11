@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Runtime;
-using Microsoft.ServiceFabric.Actors.Client;
 using Actors.Interfaces;
 using ClassLibrary;
+using RestSharp;
 
 namespace Actors
 {
@@ -42,7 +38,7 @@ namespace Actors
             return Task.FromResult(0);
         }
 
-        Task IActors.AddVariableAsync(ActorData actorData )
+        Task IActors.AddVariableAsync(ActorVariable actorData )
         {
             this.StateManager.TryAddStateAsync(actorData.VariableName, "");
             this.StateManager.SetStateAsync(actorData.VariableName, actorData.VariableValue);
@@ -65,6 +61,25 @@ namespace Actors
         {
             this.StateManager.SetStateAsync(variableName, variableValue);
             return Task.FromResult(0);
+        }
+
+        Task<ActorMethod> IActors.ExecuteMethodAsync(ActorMethod actorMethod)
+        {
+
+            var client = new RestClient(actorMethod.MethodUrl);
+            // client.Authenticator = new HttpBasicAuthenticator(username, password);
+
+            var request = new RestRequest(Method.POST);
+            // request.AddParameter("name", "value"); // adds to POST or URL querystring based on Method
+            // request.AddUrlSegment("id", "123"); // replaces matching token in request.Resource
+
+            // easily add HTTP Headers
+            // request.AddHeader("header", "value");
+
+            // execute the request
+            IRestResponse response = client.Execute(request);
+            actorMethod.Response = response.Content; // raw content as string
+            return Task.FromResult<ActorMethod> (actorMethod);
         }
     }
 }
