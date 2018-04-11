@@ -27,9 +27,11 @@
     <None Include="Scripts\Deploy-FabricApplication.ps1" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app.config" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Actors\Actors.csproj" />
     <ProjectReference Include="..\LA\LA.csproj" />
     <ProjectReference Include="..\LMS\LMS.csproj" />
     <ProjectReference Include="..\PID\PID.csproj" />

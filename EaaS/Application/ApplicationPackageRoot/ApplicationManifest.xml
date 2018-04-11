@@ -11,10 +11,16 @@
     <Parameter Name="LAActorService_PartitionCount" DefaultValue="10" />
     <Parameter Name="LAActorService_MinReplicaSetSize" DefaultValue="3" />
     <Parameter Name="LAActorService_TargetReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="ActorsActorService_PartitionCount" DefaultValue="10" />
+    <Parameter Name="ActorsActorService_MinReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="ActorsActorService_TargetReplicaSetSize" DefaultValue="3" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
        ServiceManifest.xml file. -->
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="ActorsPkg" ServiceManifestVersion="1.0.0" />
+  </ServiceManifestImport>
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="LAPkg" ServiceManifestVersion="1.0.0" />
   </ServiceManifestImport>
@@ -52,6 +58,11 @@
     <Service Name="LAActorService" GeneratedIdRef="60c3f165-113f-49af-8652-d34e17e90b6a|Persisted">
       <StatefulService ServiceTypeName="LAActorServiceType" TargetReplicaSetSize="[LAActorService_TargetReplicaSetSize]" MinReplicaSetSize="[LAActorService_MinReplicaSetSize]">
         <UniformInt64Partition PartitionCount="[LAActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+      </StatefulService>
+    </Service>
+    <Service Name="ActorsActorService" GeneratedIdRef="961669a5-3444-4003-9129-2413b9936713|Persisted">
+      <StatefulService ServiceTypeName="ActorsActorServiceType" TargetReplicaSetSize="[ActorsActorService_TargetReplicaSetSize]" MinReplicaSetSize="[ActorsActorService_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[ActorsActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
       </StatefulService>
     </Service>
   </DefaultServices>

@@ -6,19 +6,18 @@ using System.Threading.Tasks;
 using Microsoft.ServiceFabric.Actors;
 using ClassLibrary;
 
-namespace LA.Interfaces
+namespace Actors.Interfaces
 {
-
     /// <summary>
     /// This interface defines the methods exposed by an actor.
     /// Clients use this interface to interact with the actor that implements it.
     /// </summary>
-    public interface ILA : IActor
+    public interface IActors : IActor
     {
-        Task<string> MultiplyVectorScalar(string jsonInput);
-        Task<double> VecVecMultiply(string jsonInput);
-        Task<string> VecVecSubstract(string jsonInput);
-        Task<double[]> MatVecMultiply(string jsonInput);
-        Task<string> MatMatMultiply(string JsonInput);
+        Task CreateActorAsync();
+        Task AddVariableAsync(ActorData actorData);
+        Task RemoveVariableAsync(string fieldName);
+        Task<string> GetVariableValueAsync(string fieldName);
+        Task SetVariableValueAsync(string fieldName, string fieldValue);
     }
 }

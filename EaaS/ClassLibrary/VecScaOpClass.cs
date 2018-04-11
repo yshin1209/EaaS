@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ClassLibrary
 {
-    public class VecVecMulClass
+    public class VecScaOpClass
     {
         public int Id { get; set; }
-        public double[] Vector1 { get; set; }
-        public double[] Vector2 { get; set; }
+        public double[] Vector { get; set; }
+        public double Scalar { get; set; }
     }
 }

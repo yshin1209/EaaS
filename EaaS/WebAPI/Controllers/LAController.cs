@@ -17,14 +17,38 @@ namespace WebAPI.Controllers
     public class LAController : Controller
     {
         [HttpPost]
+        [Route("api/la/mulvs")]
+        public async Task<string> MultiplyVectorScalar([FromBody] VecScaOpClass input)
+        {
+            int id = input.Id;
+            ActorId actorId = new ActorId(id);
+            var actor = ActorProxy.Create<ILA>(actorId, new Uri("fabric:/Application/LAActorService"));
+            string jsonInput = JsonConvert.SerializeObject(input);
+            string output = await actor.MultiplyVectorScalar(jsonInput);
+            return output;
+        }
+
+        [HttpPost]
         [Route("api/la/blas1")]
-        public async Task<double> Blas1([FromBody] VecVecMulClass input)
+        public async Task<double> Blas1([FromBody] VecVecOpClass input)
         {
             int id = input.Id;
             ActorId actorId = new ActorId(id);
             var actor = ActorProxy.Create<ILA>(actorId, new Uri("fabric:/Application/LAActorService"));
             string jsonInput = JsonConvert.SerializeObject(input);
             double output = await actor.VecVecMultiply(jsonInput);
+            return output;
+        }
+
+        [HttpPost]
+        [Route("api/la/subvv")]
+        public async Task<string> SubVV([FromBody] VecVecOpClass input)
+        {
+            int id = input.Id;
+            ActorId actorId = new ActorId(id);
+            var actor = ActorProxy.Create<ILA>(actorId, new Uri("fabric:/Application/LAActorService"));
+            string jsonInput = JsonConvert.SerializeObject(input);
+            string output = await actor.VecVecSubstract(jsonInput);
             return output;
         }
         [HttpPost]

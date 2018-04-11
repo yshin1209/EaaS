@@ -11,5 +11,8 @@
     <Parameter Name="LAActorService_PartitionCount" Value="1" />
     <Parameter Name="LAActorService_TargetReplicaSetSize" Value="1" />
     <Parameter Name="LAActorService_MinReplicaSetSize" Value="1" />
+    <Parameter Name="ActorsActorService_PartitionCount" Value="1" />
+    <Parameter Name="ActorsActorService_TargetReplicaSetSize" Value="1" />
+    <Parameter Name="ActorsActorService_MinReplicaSetSize" Value="1" />
   </Parameters>
 </Application>
