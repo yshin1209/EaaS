@@ -63,7 +63,6 @@ namespace Actors
 
         Task IActors.SetVariableValueAsync(string variableName, string variableValue)
         {
-
             this.StateManager.SetStateAsync(variableName, variableValue);
             return Task.FromResult(0);
         }
