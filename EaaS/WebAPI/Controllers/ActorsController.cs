@@ -128,7 +128,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        [Route("execute")]
+        [Route("executeMethod")]
         public async Task<ActorId> PostExecuteMethod()
         {
             ActorId actorId = ActorId.CreateRandom();
