@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ClassLibrary
 {
-    public class ActorVariable
+    public class ActorData
     {
         public long Id { get; set; }
         public string VariableName { get; set; }

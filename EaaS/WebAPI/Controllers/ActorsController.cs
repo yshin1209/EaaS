@@ -1,10 +1,14 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Client;
 using Actors.Interfaces;
 using ClassLibrary;
+using Newtonsoft.Json;
 
 namespace WebAPI.Controllers
 {
@@ -12,6 +16,7 @@ namespace WebAPI.Controllers
     [Route("api/actors")]
     public class ActorsController : Controller
     {
+
         /// <summary>
         /// Create an actor (POST)
         /// </summary>
@@ -30,14 +35,16 @@ namespace WebAPI.Controllers
 
         [HttpPost]
         [Route("create")]
-        public async Task<ActorVariable> PostCreateActor()
+
+        public async Task<string> PostCreateActor()
         {
             ActorId actorId = ActorId.CreateRandom();
-            ActorVariable actorVariable = new ActorVariable();
-            actorVariable.Id = actorId.GetLongId();
+            ActorData actorData = new ActorData();
+            actorData.Id = actorId.GetLongId();
             var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
             await actor.CreateActorAsync();
-            return actorVariable;
+            string jsonActorData = JsonConvert.SerializeObject(actorData);
+            return jsonActorData;
         }
 
         // Create an actor (Get)
@@ -46,82 +53,88 @@ namespace WebAPI.Controllers
         // ID Range: -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807
         [HttpGet]
         [Route("create")]
-        public async Task<ActorVariable> GetCreateActor()
+        public async Task<string> GetCreateActor()
         {
             ActorId actorId = ActorId.CreateRandom();
-            ActorVariable actorVariable = new ActorVariable();
-            actorVariable.Id = actorId.GetLongId();
+            ActorData actorData = new ActorData();
+            actorData.Id = actorId.GetLongId();
             var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
             await actor.CreateActorAsync();
-            return actorVariable;
+            string jsonActorData = JsonConvert.SerializeObject(actorData);
+            return jsonActorData;
         }
 
         [HttpGet]
         [Route("{id}/{variableName}")]
-        public async Task<ActorVariable> GetVariableValue(long id, string variableName)
+        public async Task<string> GetVariableValue(long id, string variableName)
         {
             ActorId actorId = new ActorId(id);
-            ActorVariable actorVariable = new ActorVariable();
-            actorVariable.Id = actorId.GetLongId();
+            ActorData actorData = new ActorData();
+            actorData.Id = actorId.GetLongId();
             var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
             var variableValue = await actor.GetVariableValueAsync(variableName);
-            actorVariable.VariableValue = variableValue;
-            actorVariable.VariableName = variableName;
-            return actorVariable;
+            actorData.VariableValue = variableValue;
+            actorData.VariableName = variableName;
+            string jsonActorData = JsonConvert.SerializeObject(actorData);
+            return jsonActorData;
         }
 
         [HttpPost]
         [Route("getVariableValue")]
-        public async Task<ActorVariable> PostGetVariableValue([FromBody] ActorVariable actorVariable)
+        public async Task<string> PostGetVariableValue([FromBody] ActorData actorData)
         {
-            ActorId actorId = new ActorId(actorVariable.Id);
+            ActorId actorId = new ActorId(actorData.Id);
             var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
-            var variableValue = await actor.GetVariableValueAsync(actorVariable.VariableName);
-            actorVariable.VariableValue = variableValue;
-            return actorVariable;
+            var variableValue = await actor.GetVariableValueAsync(actorData.VariableName);
+            actorData.VariableValue = variableValue;
+            string jsonActorData = JsonConvert.SerializeObject(actorData);
+            return jsonActorData;
         }
 
         [HttpPost]
         [Route("addVariable")]
-        public async Task<ActorVariable> PostAddVariable([FromBody] ActorVariable actorVariable)
+        public async Task<string> PostAddVariable([FromBody] ActorData actorData)
         {
-            ActorId actorId = new ActorId(actorVariable.Id);
+            ActorId actorId = new ActorId(actorData.Id);
             var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
-            await actor.AddVariableAsync(actorVariable);
-            actorVariable.Message = "The new variable [" + actorVariable.VariableName + "] successfully added.";
-            return actorVariable;
+            await actor.AddVariableAsync(actorData);
+            actorData.Message = "The new variable [" + actorData.VariableName + "] successfully added.";
+            string jsonActorData = JsonConvert.SerializeObject(actorData);
+            return jsonActorData;
         }
 
         [HttpPost]
         [Route("removeVariable")]
-        public async Task<ActorVariable> PostRemoveVariable([FromBody] ActorVariable actorVariable)
+        public async Task<string> PostRemoveVariable([FromBody] ActorData actorData)
         {
-            ActorId actorId = new ActorId(actorVariable.Id);
+            ActorId actorId = new ActorId(actorData.Id);
             var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
-            await actor.RemoveVariableAsync(actorVariable.VariableName);
-            actorVariable.Message = "The variable [" + actorVariable.VariableName + "] successfully removed.";
-            return actorVariable;
+            await actor.RemoveVariableAsync(actorData.VariableName);
+            actorData.Message = "The variable [" + actorData.VariableName + "] successfully removed.";
+            string jsonActorData = JsonConvert.SerializeObject(actorData);
+            return jsonActorData;
         }
 
         [HttpPost]
         [Route("setVariableValue")]
-        public async Task<ActorVariable> PostSetVariableValue([FromBody] ActorVariable actorVariable)
+        public async Task<string> PostSetVariableValue([FromBody] ActorData actorData)
         {
-            ActorId actorId = new ActorId(actorVariable.Id);
+            ActorId actorId = new ActorId(actorData.Id);
             var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
-            await actor.SetVariableValueAsync(actorVariable.VariableName, actorVariable.VariableValue);
-            actorVariable.Message = "The variable [" + actorVariable.VariableName + "] was set to " + actorVariable.VariableValue;
-            return actorVariable;
+            await actor.SetVariableValueAsync(actorData.VariableName, actorData.VariableValue);
+            actorData.Message = "The variable [" + actorData.VariableName + "] was set to " + actorData.VariableValue;
+            string jsonActorData = JsonConvert.SerializeObject(actorData);
+            return jsonActorData;
         }
 
         [HttpPost]
         [Route("execute")]
-        public async Task<ActorMethod> PostExecuteMethod([FromBody] ActorMethod actorMethod)
+        public async Task<ActorId> PostExecuteMethod()
         {
-            ActorId actorId = new ActorId(actorMethod.Id);
+            ActorId actorId = ActorId.CreateRandom();
             var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
-            ActorMethod response = await actor.ExecuteMethodAsync(actorMethod);
-            return response;
+            await actor.CreateActorAsync();
+            return actorId;
         }
     }
 }

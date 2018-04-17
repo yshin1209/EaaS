@@ -92,8 +92,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActorMethod.cs" />
-    <Compile Include="ActorVariable.cs" />
+    <Compile Include="ActorData.cs" />
     <Compile Include="MatMatMulClass.cs" />
     <Compile Include="MatVecMulClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

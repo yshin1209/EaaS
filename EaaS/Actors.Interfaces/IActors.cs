@@ -15,10 +15,9 @@ namespace Actors.Interfaces
     public interface IActors : IActor
     {
         Task CreateActorAsync();
-        Task AddVariableAsync(ActorVariable actorData);
+        Task AddVariableAsync(ActorData actorData);
         Task RemoveVariableAsync(string fieldName);
         Task<string> GetVariableValueAsync(string fieldName);
         Task SetVariableValueAsync(string fieldName, string fieldValue);
-        Task<ActorMethod> ExecuteMethodAsync(ActorMethod actorMethod);
     }
 }
