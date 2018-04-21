@@ -14,10 +14,19 @@
     <Parameter Name="ActorsActorService_PartitionCount" DefaultValue="10" />
     <Parameter Name="ActorsActorService_MinReplicaSetSize" DefaultValue="3" />
     <Parameter Name="ActorsActorService_TargetReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="OperatorActorService_PartitionCount" DefaultValue="10" />
+    <Parameter Name="OperatorActorService_MinReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="OperatorActorService_TargetReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="QuadraticProgrammingActorService_PartitionCount" DefaultValue="10" />
+    <Parameter Name="QuadraticProgrammingActorService_MinReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="QuadraticProgrammingActorService_TargetReplicaSetSize" DefaultValue="3" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
        ServiceManifest.xml file. -->
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="QuadraticProgrammingPkg" ServiceManifestVersion="1.0.0" />
+  </ServiceManifestImport>
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="ActorsPkg" ServiceManifestVersion="1.0.0" />
   </ServiceManifestImport>
@@ -33,6 +42,9 @@
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="WebAPIPkg" ServiceManifestVersion="1.0.0" />
     <ConfigOverrides />
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="OperatorPkg" ServiceManifestVersion="1.0.0" />
   </ServiceManifestImport>
   <DefaultServices>
     <!-- The section below creates instances of service types, when an instance of this 
@@ -63,6 +75,16 @@
     <Service Name="ActorsActorService" GeneratedIdRef="961669a5-3444-4003-9129-2413b9936713|Persisted">
       <StatefulService ServiceTypeName="ActorsActorServiceType" TargetReplicaSetSize="[ActorsActorService_TargetReplicaSetSize]" MinReplicaSetSize="[ActorsActorService_MinReplicaSetSize]">
         <UniformInt64Partition PartitionCount="[ActorsActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+      </StatefulService>
+    </Service>
+    <Service Name="OperatorActorService" GeneratedIdRef="4b98bd3d-55c9-4ff0-a77a-820284d9efa8|Persisted">
+      <StatefulService ServiceTypeName="OperatorActorServiceType" TargetReplicaSetSize="[OperatorActorService_TargetReplicaSetSize]" MinReplicaSetSize="[OperatorActorService_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[OperatorActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+      </StatefulService>
+    </Service>
+    <Service Name="QuadraticProgrammingActorService" GeneratedIdRef="88ead1ab-374e-4917-86f5-8aa5cda3a71d|Persisted">
+      <StatefulService ServiceTypeName="QuadraticProgrammingActorServiceType" TargetReplicaSetSize="[QuadraticProgrammingActorService_TargetReplicaSetSize]" MinReplicaSetSize="[QuadraticProgrammingActorService_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[QuadraticProgrammingActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
       </StatefulService>
     </Service>
   </DefaultServices>

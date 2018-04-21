@@ -9,6 +9,10 @@ using Microsoft.ServiceFabric.Actors.Client;
 using Actors.Interfaces;
 using ClassLibrary;
 using Newtonsoft.Json;
+using RestSharp;
+using System.Text.RegularExpressions;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace WebAPI.Controllers
 {
@@ -127,14 +131,32 @@ namespace WebAPI.Controllers
             return jsonActorData;
         }
 
-        [HttpPost]
+        /*[HttpPost]
+        [Consumes("application/json")]
         [Route("executeMethod")]
-        public async Task<ActorId> PostExecuteMethod()
+        public async string PostExecuteMethod([FromBody] HttpMethodInput input)
         {
-            ActorId actorId = ActorId.CreateRandom();
-            var actor = ActorProxy.Create<IActors>(actorId, new Uri("fabric:/Application/ActorsActorService"));
-            await actor.CreateActorAsync();
-            return actorId;
-        }
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri(input.Uri);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+
+            HttpResponseMessage response = await client.PostAsync(
+     "", input.Body);
+            response.EnsureSuccessStatusCode();
+
+            string responseContent = "";
+            string httpMethodUri = input.Uri;
+
+            // client.Authenticator = new HttpBasicAuthenticator(username, password);
+            var request = new RestRequest(httpMethodUri, Method.POST);
+            request.AddParameter("application/json", input, ParameterType.RequestBody);
+            client.ExecuteAsync(request, response => {
+                responseContent = response.Content;
+            });
+            return responseContent;
+        }*/
     }
 }

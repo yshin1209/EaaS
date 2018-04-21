@@ -26,6 +26,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="1.1.1" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="RestSharp" Version="106.3.0-alpha0018" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="2.4.0" />
   </ItemGroup>
   <ItemGroup>
@@ -36,7 +37,9 @@
     <ProjectReference Include="..\ClassLibrary\ClassLibrary.csproj" />
     <ProjectReference Include="..\LA.Interfaces\LA.Interfaces.csproj" />
     <ProjectReference Include="..\LMS.Interfaces\LMS.Interfaces.csproj" />
+    <ProjectReference Include="..\LogicOperator.Interfaces\Operator.Interfaces.csproj" />
     <ProjectReference Include="..\PID.Interfaces\PID.Interfaces.csproj" />
+    <ProjectReference Include="..\QuadraticProgramming.Interfaces\QuadraticProgramming.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>

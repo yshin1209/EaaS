@@ -34,7 +34,9 @@
     <ProjectReference Include="..\Actors\Actors.csproj" />
     <ProjectReference Include="..\LA\LA.csproj" />
     <ProjectReference Include="..\LMS\LMS.csproj" />
+    <ProjectReference Include="..\LogicOperator\Operator.csproj" />
     <ProjectReference Include="..\PID\PID.csproj" />
+    <ProjectReference Include="..\QuadraticProgramming\QuadraticProgramming.csproj" />
     <ProjectReference Include="..\WebAPI\WebAPI.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
