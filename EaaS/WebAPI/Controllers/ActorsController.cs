@@ -13,6 +13,7 @@ using RestSharp;
 using System.Text.RegularExpressions;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 
 namespace WebAPI.Controllers
 {
@@ -131,32 +132,18 @@ namespace WebAPI.Controllers
             return jsonActorData;
         }
 
-        /*[HttpPost]
-        [Consumes("application/json")]
+        [HttpPost]
         [Route("executeMethod")]
-        public async string PostExecuteMethod([FromBody] HttpMethodInput input)
+        public async Task<object> PostExecuteMethod([FromBody]dynamic data)
         {
+            string uri = data.uri;
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri(input.Uri);
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
-
-
-            HttpResponseMessage response = await client.PostAsync(
-     "", input.Body);
-            response.EnsureSuccessStatusCode();
-
-            string responseContent = "";
-            string httpMethodUri = input.Uri;
-
-            // client.Authenticator = new HttpBasicAuthenticator(username, password);
-            var request = new RestRequest(httpMethodUri, Method.POST);
-            request.AddParameter("application/json", input, ParameterType.RequestBody);
-            client.ExecuteAsync(request, response => {
-                responseContent = response.Content;
-            });
-            return responseContent;
-        }*/
+            var request = new HttpRequestMessage(HttpMethod.Post, uri);
+            string jsonData = JsonConvert.SerializeObject(data);
+            request.Content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            var response = await client.SendAsync(request);
+            string jsonResponse = await response.Content.ReadAsStringAsync();
+            return jsonResponse;
+        }
     }
 }
