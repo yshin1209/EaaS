@@ -35,7 +35,7 @@ for n= 2:N
     end
     
     % call the PID web service which returns control signal u(n)
-    url = ['http://csmlab8.uconn.edu/api/pid/' newServiceId '/' reset_value '/' x_value '/' r_value '/' Kp '/' Ki '/' Kd];
+    url = ['http://csmlab7.uconn.edu/api/pid/' newServiceId '/' reset_value '/' x_value '/' r_value '/' Kp '/' Ki '/' Kd];
     tic;
     u(n) = webread(url); 
     timeCom(n) = toc; % time for the round-trip between the client and the cloud
