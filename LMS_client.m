@@ -15,7 +15,7 @@ stepSize_value = num2str(stepSize);    % convert stepSize into string
 timeCom = zeros(N,1);          % time for the round-trip between the client and the cloud
 
 % initialize LMS web servie with newServiceId and timeDelay_value
-url = ['http://csmlab8.uconn.edu/api/lms/' newServiceId '/' timeDelay_value];
+url = ['http://csmlab7.uconn.edu/api/lms/' newServiceId '/' timeDelay_value];
 webread(url); 
 
 for n = timeDelay+1:N
