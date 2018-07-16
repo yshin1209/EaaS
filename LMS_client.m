@@ -27,7 +27,7 @@ for n = timeDelay+1:N
     u_value = num2str(u(n));
 
     % call the LMS web service which returns response [estiated output, estimation error, estimated parameter]
-    url = ['http://csmlab8.uconn.edu/api/lms/' newServiceId '/' stepSize_value '/' u_value '/' x_value];
+    url = ['http://csmlab7.uconn.edu/api/lms/' newServiceId '/' stepSize_value '/' u_value '/' x_value];
     tic
     response(n,:) = webread(url);
     timeCom(n) = toc; % time for the round-trip between the client and the cloud
